@@ -22,12 +22,12 @@ class TaskSeeder extends Seeder
         ]);
         $task2= Task::create([
             'label'=>'Learn Node.Js',
-            'sort_order'=>1,
+            'sort_order'=>2,
             'completed_at'=>'2022-01-09 12:02:51',
         ]);
         $task3= Task::create([
-            'label'=>'Learn Javascript',
-            'sort_order'=>1,
+            'label'=>'Learn Angular',
+            'sort_order'=>3,
         ]);
     }
 }
