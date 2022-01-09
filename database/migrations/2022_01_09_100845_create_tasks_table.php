@@ -17,6 +17,7 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->string('label');
             $table->integer('sort_order');
+            $table->dateTime('completed_at')->nullable();
             $table->timestamps();
         });
     }
