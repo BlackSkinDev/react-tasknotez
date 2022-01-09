@@ -28,7 +28,7 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::all();
-        return $this->success($tasks,null,Response::HTTP_OK);
+        return $this->success(TaskResource::collection($tasks),null,Response::HTTP_OK);
     }
 
 
@@ -36,7 +36,7 @@ class TaskController extends Controller
     {
         // check if  allow duplicate setting is turned on while trying to store
         if($this->task_service->checkDuplicateSettingsWhileCreating($request['label'])){
-            return $this->error('A task with same label already exists',Response::HTTP_BAD_REQUEST,null);
+            return $this->error('Duplicate task label is not allowed',Response::HTTP_BAD_REQUEST,null);
         }
         Task::create($request->validated());
         return $this->success(null,'Task created successfully',Response::HTTP_CREATED);
@@ -46,7 +46,7 @@ class TaskController extends Controller
 
     public function show(Task $task)
     {
-        return $this->success($task,null,Response::HTTP_OK);
+        return $this->success(new TaskResource($task),null,Response::HTTP_OK);
     }
 
 
@@ -55,7 +55,7 @@ class TaskController extends Controller
 
         // check if  allow duplicate setting is turned on while trying to update
         if($this->task_service->checkDuplicateSettingsWhileUpdating($request['label'],$task)){
-            return $this->error('A task with same label already exists',Response::HTTP_BAD_REQUEST,null);
+            return $this->error('Duplicate task label is not allowed',Response::HTTP_BAD_REQUEST,null);
         }
         $task->update($request->validated());
         return $this->success(null,'Task Updated successfully',Response::HTTP_OK);
