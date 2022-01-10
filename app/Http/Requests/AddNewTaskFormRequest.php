@@ -30,7 +30,6 @@ class AddNewTaskFormRequest extends FormRequest
     {
         return [
             "label"=>'required|string',
-            "sort_order"=>'required|integer',
         ];
     }
 

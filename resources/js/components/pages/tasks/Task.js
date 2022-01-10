@@ -25,7 +25,7 @@ class Task extends Component {
                     <p>Created on: {this.props.task.created_at}</p>
                     <p>Status:
                     { this.props.task.completed_at==null?
-                    <Badge bg="warning" className="status-badge" >Incomplete</Badge>:
+                    <Badge bg="warning" className="status-badge" >Ongoing</Badge>:
                     <Badge bg="success" className="status-badge" >Completed</Badge>
                     }
 
@@ -35,7 +35,10 @@ class Task extends Component {
                     {this.props.task.label}
                     </Card.Text>
                     <Button variant="primary" className="button-text">Edit</Button>
-                    <Button variant="danger" className="ml-4 button-text">Unfinish</Button>
+                    { this.props.task.completed_at==null?
+                     <Button variant="success" className="ml-4 button-text">Complete</Button>:
+                     <Button variant="danger" className="ml-4 button-text">Uncomplete</Button>
+                    }
                     </Card.Body>
             </Card>
             </div>

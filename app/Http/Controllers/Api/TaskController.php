@@ -38,7 +38,11 @@ class TaskController extends Controller
         if($this->task_service->checkDuplicateSettingsWhileCreating($request['label'])){
             return $this->error('Duplicate task label is not allowed',Response::HTTP_BAD_REQUEST,null);
         }
-        Task::create($request->validated());
+
+        Task::create([
+            'label' => $request['label'],
+            'sort_order' =>(Task::latest()->first()->sort_order)+1
+        ]);
         return $this->success(null,'Task created successfully',Response::HTTP_CREATED);
 
     }

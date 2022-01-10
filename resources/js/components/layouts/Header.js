@@ -18,7 +18,7 @@ const Header = () => {
         <Link to="/tasks" className="header-nav-link">
             <Nav.Item>Tasks</Nav.Item>
         </Link>
-        <Link to="/" className="header-nav-link">
+        <Link to="/tasks/create" className="header-nav-link">
             <Nav.Item className="ml-4">Add Task</Nav.Item>
         </Link>
         </Nav>
