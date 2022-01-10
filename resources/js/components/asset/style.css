@@ -1,0 +1,12 @@
+.header-nav-link{
+    color: white;
+    text-decoration:none !important;
+}
+
+.header-nav-link:hover{
+    color: white;
+}
+
+.status-badge{
+    color: white;
+}

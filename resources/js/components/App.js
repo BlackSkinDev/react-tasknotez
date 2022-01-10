@@ -1,23 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
 
-function App() {
+
+import Header from "./layouts/Header";
+import TaskList from "./pages/tasks/TaskList"
+import {Button,Container} from 'react-bootstrap'
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
+class App extends Component {
+  render() {
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <div className="card-header">Main App Component </div>
-                        <div className="card-body">I'm an app component!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <div>
+
+        <Router>
+          <Header />
+          <div>
+
+            <Container className="p-4">
+              <Switch>
+                <Route path="/tasks" exact={true} component={TaskList} />
+              </Switch>
+
+            </Container>
+          </div>
+        </Router>
+      </div>
     );
+  }
+
 }
 
 export default App;
 
-if (document.getElementById('app')) {
-    ReactDOM.render(<App />, document.getElementById('app'));
+
+if (document.getElementById("app")) {
+  ReactDOM.render(<App />, document.getElementById("app"));
 }
