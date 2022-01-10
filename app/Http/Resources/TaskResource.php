@@ -19,6 +19,7 @@ class TaskResource extends JsonResource
             'label'=>$this->label,
             'sort_order' =>$this->sort_order,
             'completed_at'=>$this->completed_at,
+            'created_at' =>$this->created_at
         ];
     }
 }
