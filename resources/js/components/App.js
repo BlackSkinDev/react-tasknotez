@@ -8,6 +8,16 @@ import {Button,Container} from 'react-bootstrap'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 class App extends Component {
+    state ={
+        info: {
+            key:1,
+            task:{
+                created_at:'12/12/12',
+                completed_at:'13/23/12',
+                label:'Cool'
+            }
+        },
+    }
   render() {
     return (
       <div>
@@ -20,6 +30,8 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact={true} component={TaskList} />
                 <Route path="/tasks" exact={true} component={TaskList} />
+               
+
               </Switch>
 
             </Container>
