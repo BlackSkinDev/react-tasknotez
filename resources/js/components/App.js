@@ -18,6 +18,7 @@ class App extends Component {
 
             <Container className="p-4">
               <Switch>
+                <Route path="/" exact={true} component={TaskList} />
                 <Route path="/tasks" exact={true} component={TaskList} />
               </Switch>
 
