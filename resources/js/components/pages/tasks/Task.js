@@ -99,13 +99,18 @@ class Task extends Component {
             <Card className="mt-4 task-card" key={this.props.task.id}>
                 <Card.Body>
                     <Card.Subtitle className="mb-2 text-muted">
-                    <p>Created on: {this.props.task.created_at}</p>
-                    <p>Status:
-                    { this.props.task.completed_at==null?
-                    <Badge bg="warning" className="status-badge" >Ongoing</Badge>:
-                    <Badge bg="success" className="status-badge" >Completed</Badge>
-                    }
+                    <p>
+                        <small>Created on: {this.props.task.created_at}</small>
+                        { this.props.task.completed_at==null?
+                            <Badge bg="warning" className="status-badge float-right" >Ongoing</Badge>:
+                            <Badge bg="success" className="status-badge float-right" >Completed</Badge>
+                        }
                     </p>
+
+                    { this.props.task.completed_at &&
+                         (<p><small>Completed on: {this.props.task.completed_at}</small></p>)
+
+                    }
                     </Card.Subtitle>
                     <Card.Text>
                     {this.props.task.label}

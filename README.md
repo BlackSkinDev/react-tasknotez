@@ -1,78 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+# Task Management App 
+> A simple Task Management app that allows users view,create,edit,rearrage and manipulate tasks
 
-## About Laravel
+## Description
+This project was built with React,Laravel and PostgreSQL .
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##### Integration testing :
+- PHPUnit (https://phpunit.de)
+- Faker (https://github.com/fzaninotto/Faker)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Running the App
+To run the App, you must have:
+- **PHP** (https://www.php.net/downloads)
+- **PostgreSQL** (https://www.postgresql.org/download)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Clone the repository to your local machine using the command
+```console
+$ git clone *remote repository url*
+```
 
-## Learning Laravel
+Create an `.env` file using the command. You can use this config or change it for your purposes.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```console
+$ cp .env.example .env
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+### Environment
+Configure environment variables in `.env` for dev environment based on your MYSQL database configuration
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```  
+DB_CONNECTION=<YOUR_MYSQL_TYPE>
+DB_HOST=<YOUR_MYSQL_HOST>
+DB_PORT=<YOUR_MYSQL_PORT>
+DB_DATABASE=<YOUR_DB_NAME>
+DB_USERNAME=<YOUR_DB_USERNAME>
+DB_PASSWORD=<YOUR_DB_PASSWORD>
+MIX_REACT_APP_BASE_URL= < Base url for Laravel API e.g  http://localhost:8000/api  or http://app.test/api (Valet)**>
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+### LARAVEL INSTALLATION
+Install the dependencies and start the server
 
-## Contributing
+```console
+$ composer install
+$ php artisan key:generate
+$ php artisan migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### REACT INSTALLATION
+Install the dependencies and start the server
 
-## Code of Conduct
+```console
+$ npm install && npm run dev
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+You should be able to visit your app at your laravel app base url e.g  http://localhost:8000  or http://app.test (Valet).
 
-## Security Vulnerabilities
+## Testing
+To run unit tests:
+```console
+$ composer test
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Assumptions
+While creating the app the following Assumptions were made
+- **Absence of "allow_duplicates" setting implies that tasks labels can be duplicated** 
+- **The sort order was auto generated from backend and auto incremented for each task. Sort order was then used to order the task returned to frontend**
+- **The completed_at attribute signified the task completion status, hence it was set to null when a task is created. When such
+task is set as complete, the completed_at was set to current timestamp and vice versa**
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

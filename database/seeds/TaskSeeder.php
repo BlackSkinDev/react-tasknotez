@@ -18,12 +18,12 @@ class TaskSeeder extends Seeder
         $task1= Task::create([
             'label'=>'Learn Javascript',
             'sort_order'=>1,
-            'completed_at'=>'2022-01-09 11:02:51',
+            'completed_at'=>'2021-01-09 11:02:51',
         ]);
         $task2= Task::create([
             'label'=>'Learn Node.Js',
             'sort_order'=>2,
-            'completed_at'=>'2022-01-09 12:02:51',
+            'completed_at'=>'2021-01-013 12:02:51',
         ]);
         $task3= Task::create([
             'label'=>'Learn Angular',

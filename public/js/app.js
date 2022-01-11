@@ -13912,7 +13912,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".header-nav-link{\n    color: white;\n    text-decoration:none !important;\n}\n\n.header-nav-link:hover{\n    color: white;\n}\n\n.status-badge{\n    color: white;\n}\n\n.task-card{\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\n    transition: 0.3s;\n}\n\n.task-create-ard{\n    box-shadow: 0 4px 8px 4 rgba(0,0,0,0.2);\n    transition: 0.3s;\n}\n\n\n\n\n.task-card:hover {\n    box-shadow:0 0px 3px 0 blue;\n    transform: scale(1.1);\n}\n\n.button-text{\n    font-weight : bold ;\n}\n\n", ""]);
+exports.push([module.i, ".header-nav-link{\n    color: white;\n    text-decoration:none !important;\n}\n\n.header-nav-link:hover{\n    color: white;\n}\n\n.status-badge{\n    color: white;\n}\n\n.task-card{\n    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);\n    transition: 0.3s;\n}\n\n.task-create-ard{\n    box-shadow: 0 4px 8px 4 rgba(0,0,0,0.2);\n    transition: 0.3s;\n}\n\n\n\n\n.task-card:hover {\n    box-shadow:0 0px 3px 0 blue;\n    transform: scale(1.1);\n}\n\n.button-text{\n    font-weight : bold ;\n}\n", ""]);
 
 // exports
 
@@ -93718,13 +93718,13 @@ var Task = /*#__PURE__*/function (_Component) {
         key: this.props.task.id
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Body, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Subtitle, {
         className: "mb-2 text-muted"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Created on: ", this.props.task.created_at), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Status:", this.props.task.completed_at == null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Badge"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Created on: ", this.props.task.created_at), this.props.task.completed_at == null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Badge"], {
         bg: "warning",
-        className: "status-badge"
+        className: "status-badge float-right"
       }, "Ongoing") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Badge"], {
         bg: "success",
-        className: "status-badge"
-      }, "Completed"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Text, null, this.props.task.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
+        className: "status-badge float-right"
+      }, "Completed")), this.props.task.completed_at && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, "Completed on: ", this.props.task.completed_at))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Card"].Text, null, this.props.task.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["Link"], {
         to: "/tasks/edit-task/".concat(this.props.task.id)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap__WEBPACK_IMPORTED_MODULE_1__["Button"], {
         variant: "outline-primary",
