@@ -99,6 +99,7 @@ function setAsCompleted(taskId){
 
   const SortableItem = sortableElement(({task}) =>   <Card className="mt-4 task-card" key={task.id}>
             <Card.Body>
+                <Card.Text>{task.sort_order}</Card.Text>
                 <Card.Subtitle className="mb-2 text-muted">
                 <p>
                     <small>Created on: {task.created_at}</small>

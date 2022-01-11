@@ -73,4 +73,6 @@ While creating the app the following Assumptions were made
 - **The sort order was auto generated from backend and auto incremented for each task. Sort order was then used to order the task returned to frontend**
 - **The completed_at attribute signified the task completion status, hence it was set to null when a task is created. When such
 task is set as complete, the completed_at was set to current timestamp and vice versa**
+- **There was a little contraint to reordering tasks. Dragging up or down of tasks one level was catered for on backend(If page is refreshed,new task order will be updated too).**
+- **This means that dragging two level up or down will reflect on frontend but not on backend. The functionality can be made implementated nevertheless**
 
