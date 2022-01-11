@@ -93870,15 +93870,16 @@ var TaskCreate = /*#__PURE__*/function (_Component) {
                 submitDataResponse = _context.sent;
 
                 if (submitDataResponse.status === 'success') {
-                  //alert(submitDataResponse.message)
-                  sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.fire('Success', submitDataResponse.message, 'success');
-
                   _this.setState({
                     label: " "
                   });
 
                   _this.setState({
                     isLoading: false
+                  });
+
+                  sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.fire('Success', submitDataResponse.message, 'success').then(function (result) {
+                    window.location = '/tasks';
                   });
                 } else {
                   _this.setState({
@@ -94089,7 +94090,9 @@ var TaskEdit = /*#__PURE__*/function (_Component) {
                 submittedDataResponse = _context.sent;
 
                 if (submittedDataResponse.status === 'success') {
-                  sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.fire('Success', submittedDataResponse.message, 'success'); // this.setState({label:" "})
+                  sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.fire('Success', submittedDataResponse.message, 'success').then(function (result) {
+                    window.location = '/tasks';
+                  });
 
                   _this.setState({
                     isLoading: false
@@ -94131,7 +94134,6 @@ var TaskEdit = /*#__PURE__*/function (_Component) {
         });
       })["catch"](function (err) {
         sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.fire('Error', err.response.data.message, 'error');
-        history.push(_constants__WEBPACK_IMPORTED_MODULE_7__["PUBLIC_URL"]);
       });
     }
   }, {

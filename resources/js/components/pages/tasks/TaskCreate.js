@@ -41,15 +41,19 @@ class TaskCreate extends Component {
         const postBody={label:this.state.label}
         const submitDataResponse = await storeNewTask(postBody)
         if(submitDataResponse.status === 'success'){
-            //alert(submitDataResponse.message)
+            this.setState({label:" "})
+            this.setState({isLoading:false})
             Swal.fire(
                 'Success',
                 submitDataResponse.message,
                 'success'
               )
-            this.setState({label:" "})
-            this.setState({isLoading:false})
-    
+              .then((result) => {
+                window.location='/tasks';
+              });
+
+
+
         }
         else{
             this.setState({isLoading:false,errors:submitDataResponse.data})

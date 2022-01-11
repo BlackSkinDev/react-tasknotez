@@ -39,7 +39,7 @@ class TaskEdit extends Component {
                 err.response.data.message,
                 'error'
               )
-            history.push(PUBLIC_URL)
+
         })
 
     }
@@ -61,8 +61,9 @@ class TaskEdit extends Component {
                 'Success',
                 submittedDataResponse.message,
                 'success'
-              )
-           // this.setState({label:" "})
+              ) .then((result) => {
+                window.location='/tasks';
+              });
             this.setState({isLoading:false})
 
         }
