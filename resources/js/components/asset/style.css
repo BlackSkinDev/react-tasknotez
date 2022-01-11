@@ -26,9 +26,10 @@
 
 .task-card:hover {
     box-shadow:0 0px 3px 0 blue;
-    
+
 }
 
 .button-text{
     font-weight : bold ;
 }
+
