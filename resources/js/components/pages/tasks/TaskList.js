@@ -99,6 +99,7 @@ function setAsCompleted(taskId){
 
   const SortableItem = sortableElement(({task}) =>   <Card className="mt-4 task-card" key={task.id}>
             <Card.Body>
+                <Card.Text>{task.sort_order}</Card.Text>
                 <Card.Subtitle className="mb-2 text-muted">
                 <p>
                     <small>Created on: {task.created_at}</small>
@@ -166,7 +167,22 @@ class TaskList extends Component {
     };
 
     updateSortOrderForTasks(task1_id, task2_id) {
-        console.log(task1_id + ','+task2_id);
+        if(task1_id !== task2_id) {
+            Axios.get(`${BASE_URL}/tasks/${task1_id}/${task2_id}/swap-sort-order`)
+            .then(response=>{
+               console.log(response.data)
+
+            })
+            .catch(err =>{
+                Swal.fire(
+                    'Error',
+                    'Error encountered while processing!',
+                    'error'
+                  )
+
+            })
+        }
+
     }
 
 
@@ -206,7 +222,7 @@ class TaskList extends Component {
 
                     <Row className="g-3" className='mt-4 justify-content-center'>
                     <Col xs={12} md={7}>
-                    <SortableContainer onSortEnd={this.onSortEnd}>
+                    <SortableContainer onSortEnd={this.onSortEnd} distance={0} >
                     {this.state.taskList.map((task, index) => (
                           <SortableItem key={`item-${task.id}`} index={index} task={task} />
 

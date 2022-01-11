@@ -78,5 +78,15 @@ class TaskController extends Controller
         return $this->success(null,'Task set as Incomplete successfully',Response::HTTP_OK);
     }
 
+    public function swapSortOrder(Task $task1,Task $task2){
+        $old_sort_id = ['task1'=>$task1->sort_order,'task2'=>$task2->sort_order];
+
+        $task1->update(['sort_order'=>$old_sort_id['task2']]);
+        $task2->update(['sort_order'=>$old_sort_id['task1']]);
+        return $this->success(null,null,Response::HTTP_OK);
+
+
+    }
+
 
 }
