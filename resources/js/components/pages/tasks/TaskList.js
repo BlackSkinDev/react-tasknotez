@@ -99,8 +99,6 @@ function setAsCompleted(taskId){
 
   const SortableItem = sortableElement(({task}) =>   <Card className="mt-4 task-card" key={task.id}>
             <Card.Body>
-                <Card.Title>
-                </Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
                 <p>
                     <small>Created on: {task.created_at}</small>
@@ -167,15 +165,20 @@ class TaskList extends Component {
        }
     };
 
+    updateSortOrderForTasks(task1_id, task2_id) {
+        console.log(task1_id + ','+task2_id);
+    }
+
 
     onSortEnd = ({oldIndex, newIndex}) => {
-       // console.log("Old index:" + oldIndex + " new index:" + newIndex)
-        console.log(this.state.taskList)
+       //console.log("Old index:" + oldIndex + " new index:" + newIndex)
+       //console.log(this.state.taskList[oldIndex].label +" interchanged with " + this.state.taskList[newIndex].label )
+        this.updateSortOrderForTasks(this.state.taskList[oldIndex].id,this.state.taskList[newIndex].id);
         this.setState(({taskList}) => ({
           taskList: arrayMove(this.state.taskList, oldIndex, newIndex),
         }));
        // console.log(this.state.taskList)
-       console.log(this.state.taskList)
+       //console.log(this.state.taskList)
       };
 
 
