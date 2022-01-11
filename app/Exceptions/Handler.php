@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if($e instanceof  ModelNotFoundException || $e instanceof NotFoundHttpException){
-            return response()->json(['message'=>'request not found'],Response::HTTP_NOT_FOUND);
+            return response()->json(['message'=>'Resource not found'],Response::HTTP_NOT_FOUND);
         }
 
         return response()->json(['message'=>$e->getMessage()],Response::HTTP_INTERNAL_SERVER_ERROR);

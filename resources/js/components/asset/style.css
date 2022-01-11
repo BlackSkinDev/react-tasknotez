@@ -16,6 +16,14 @@
     transition: 0.3s;
 }
 
+.task-create-ard{
+    box-shadow: 0 4px 8px 4 rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+
+
+
 .task-card:hover {
     box-shadow:0 0px 3px 0 blue;
     transform: scale(1.1);

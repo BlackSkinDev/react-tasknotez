@@ -36,7 +36,7 @@ class TaskController extends Controller
     {
         // check if  allow duplicate setting is turned on while trying to store
         if($this->task_service->checkDuplicateSettingsWhileCreating($request['label'])){
-            return $this->error('Duplicate task label is not allowed',Response::HTTP_BAD_REQUEST,null);
+            return $this->error(null,Response::HTTP_BAD_REQUEST,['Duplicate task label is not allowed currently']);
         }
 
         Task::create([
@@ -59,7 +59,7 @@ class TaskController extends Controller
 
         // check if  allow duplicate setting is turned on while trying to update
         if($this->task_service->checkDuplicateSettingsWhileUpdating($request['label'],$task)){
-            return $this->error('Duplicate task label is not allowed',Response::HTTP_BAD_REQUEST,null);
+            return $this->error(null,Response::HTTP_BAD_REQUEST,['Duplicate task label is not allowed currently']);
         }
         $task->update($request->validated());
         return $this->success(null,'Task Updated successfully',Response::HTTP_OK);

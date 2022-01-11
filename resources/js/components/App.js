@@ -5,6 +5,9 @@ import ReactDOM from "react-dom";
 import Header from "./layouts/Header";
 import TaskList from "./pages/tasks/TaskList"
 import TaskCreate from "./pages/tasks/TaskCreate"
+import TaskEdit from "./pages/tasks/TaskEdit"
+
+import NotFound from "./pages/NotFound"
 import {Button,Container} from 'react-bootstrap'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {PUBLIC_URL} from "../constants"
@@ -24,6 +27,8 @@ class App extends Component {
                 <Route path={`${PUBLIC_URL}`} exact={true} component={TaskList} />
                 <Route path={`${PUBLIC_URL}`} exact={true} component={TaskList} />
                 <Route path={`${PUBLIC_URL}/create`} exact={true} component={TaskCreate} />
+                <Route path={`${PUBLIC_URL}/edit-task/:id`} component={TaskEdit}/>
+                <Route path='*'  component={NotFound} />
               </Switch>
             </Container>
           </div>

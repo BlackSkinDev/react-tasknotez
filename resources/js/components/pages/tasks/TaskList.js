@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {Spinner,Button} from 'react-bootstrap'
 import { Link } from "react-router-dom";
+import {storeNewTask} from "../../../services/TaskService";
+import {getTaskLists} from "../../../services/TaskService";
 
 import Task from "./Task"
 
@@ -19,20 +21,25 @@ class TaskList extends Component {
     }
 
     componentDidMount() {
-        this.getAllTaskList()
+        this.getTasksLists()
     }
 
-    getAllTaskList = () => {
-        this.setState({isLoading:true})
-         // call api to fetch tasks
-         Axios.get(`${this.state.BASE_URL}/tasks`)
-         .then(response=>{
-             this.setState({taskList: response.data.data,isLoading:false})
-         })
-         .catch(err =>{
-             console.error(err)
-         })
-    }
+    getTasksLists = async () => {
+        this.setState({ isLoading: true });
+        const response = await getTaskLists();
+        if (response.status === 'success') {
+        this.setState({
+            taskList: response.data,
+            isLoading: false,
+        });
+        } else {
+        this.setState({
+            isLoading: false,
+        });
+
+        alert("An Error was encountered, try again later")
+       }
+    };
 
     render() {
         return (

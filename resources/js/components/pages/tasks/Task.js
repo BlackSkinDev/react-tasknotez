@@ -5,6 +5,8 @@ import Axios from 'axios'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import { Link } from "react-router-dom";
+
 import  '../../asset/style.css';
 
 class Task extends Component {
@@ -34,10 +36,12 @@ class Task extends Component {
                     <Card.Text>
                     {this.props.task.label}
                     </Card.Text>
-                    <Button variant="primary" className="button-text">Edit</Button>
+                    <Link to={`/tasks/edit-task/${this.props.task.id}`} >
+                        <Button variant="outline-primary" className="button-text">Edit</Button>
+                    </Link>
                     { this.props.task.completed_at==null?
-                     <Button variant="success" className="ml-4 button-text">Complete</Button>:
-                     <Button variant="danger" className="ml-4 button-text">Uncomplete</Button>
+                     <Button variant="outline-success" className="ml-4 button-text">Complete</Button>:
+                     <Button variant="outline-danger" className="ml-4 button-text">Uncomplete</Button>
                     }
                     </Card.Body>
             </Card>

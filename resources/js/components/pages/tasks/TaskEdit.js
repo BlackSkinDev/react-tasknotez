@@ -4,8 +4,9 @@ import Axios from 'axios'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link,withRouter } from "react-router-dom";
-import {storeNewTask} from "../../../services/TaskService";
+import {getTask,updateTask} from "../../../services/TaskService";
 import {PUBLIC_URL} from "../../../constants"
+
 
 
 import {Spinner,Button,Form,Card} from 'react-bootstrap'
@@ -15,14 +16,25 @@ import {Spinner,Button,Form,Card} from 'react-bootstrap'
 
 import  '../../asset/style.css';
 
-class TaskCreate extends Component {
+class TaskEdit extends Component {
     state ={
         isLoading:false,
         label:'',
-        errors:[]
+        errors:[],
+        BASE_URL:process.env.MIX_REACT_APP_BASE_URL,
+        id:this.props.match.params.id
     }
 
     componentDidMount() {
+        const {history} = this.props
+        Axios.get(`${this.state.BASE_URL}/tasks/${this.state.id}`)
+        .then(response=>{
+            this.setState({label:response.data.data.label})
+        })
+        .catch(err =>{
+            alert(err.response.data.message)
+            history.push(PUBLIC_URL)
+        })
 
     }
 
@@ -37,17 +49,16 @@ class TaskCreate extends Component {
         const {history} = this.props
         this.setState({isLoading:true})
         const postBody={label:this.state.label}
-        const submitDataResponse = await storeNewTask(postBody)
-        if(submitDataResponse.status === 'success'){
-            alert(submitDataResponse.message)
+        const submittedDataResponse = await updateTask(postBody,this.state.id)
+        if(submittedDataResponse.status === 'success'){
+            alert(submittedDataResponse.message)
             this.setState({label:" "})
             this.setState({isLoading:false})
             history.push(PUBLIC_URL)
-
-
         }
         else{
-            this.setState({isLoading:false,errors:submitDataResponse.data})
+            console.log(submittedDataResponse)
+            this.setState({isLoading:false,errors:submittedDataResponse.data})
 
         }
 
@@ -58,7 +69,7 @@ class TaskCreate extends Component {
     render() {
         return (
             <div>
-                <h3>Create New Task</h3>
+                <h3>Edit Task</h3>
                 <div className="float-right">
                 <Link to="/tasks">
                 <Button variant="info">See all</Button>
@@ -87,8 +98,8 @@ class TaskCreate extends Component {
                                     <p className="text-danger">{this.state.errors[0]}</p>
                                 }
                                 { this.state.isLoading==true ?
-                                    <Button variant="primary" size="lg" type="button" className="button-text" active disabled>Creating...</Button>:
-                                    <Button variant="primary"  type="submit" active size="lg">Create Task</Button>
+                                    <Button variant="primary" size="lg" type="button" className="button-text" active disabled>Updating...</Button>:
+                                    <Button variant="primary"  type="submit" active size="lg">Update Task</Button>
                                 }
 
                             </Form>
@@ -100,4 +111,4 @@ class TaskCreate extends Component {
         )
     }
 }
-export default  withRouter(TaskCreate)
+export default  withRouter(TaskEdit)

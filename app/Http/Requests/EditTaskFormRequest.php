@@ -38,7 +38,7 @@ class EditTaskFormRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'status' => 'error',
             'msg' => null,
-            'errors'=>$validator->errors()->all()],Response::HTTP_BAD_REQUEST
+            'data'=>$validator->errors()->all()],Response::HTTP_BAD_REQUEST
         ));
     }
 }
