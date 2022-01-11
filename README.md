@@ -1,6 +1,6 @@
 
 # Task Management App 
-> A simple Task Management app that allows users view,create,edit,rearrage and manipulate tasks
+> A simple Task Management app that allows users to view,create,edit,rearrange and manipulate tasks
 
 ## Description
 This project was built with React,Laravel and PostgreSQL .
@@ -49,6 +49,9 @@ $ php artisan migrate
 ```
 
 ### REACT INSTALLATION
+
+
+
 Install the dependencies and start the server
 
 ```console

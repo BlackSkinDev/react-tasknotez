@@ -85,7 +85,7 @@ class TaskCreate extends Component {
                                 </Spinner>
                             </div>
                         )}
-                        <Card className="task-create-card mt-3">
+                        <Card className="task-create-card mt-5">
                             <Card.Body>
                             <Form onSubmit={this.submitForm}>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
