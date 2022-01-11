@@ -60,14 +60,13 @@ class TaskList extends Component {
                 )}
                 { this.state.taskList.length > 0 ?
 
-                <Row xs={1} md={3} className="g-3" className='mt-4'>
+                <Row className="g-3" className='mt-4 justify-content-center'>
+                    <Col xs={12} md={7}>
                     { Object.entries(this.state.taskList).map(([key, task]) => {
                         return (
-                            <Col key={key}>
-                                <Task task={task}/>
-                            </Col>
-                        )
-                    })}
+                            <Task task={task}/>)
+                        })}
+                    </Col>
                 </Row>
 
                 :<h4 className="mt-5">Oops! You have no task</h4>

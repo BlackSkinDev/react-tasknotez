@@ -46,6 +46,7 @@ Install the dependencies and start the server
 $ composer install
 $ php artisan key:generate
 $ php artisan migrate
+$ php artisan db:seed
 ```
 
 ### REACT INSTALLATION
