@@ -27,7 +27,6 @@ class TaskTest extends TestCase
 
         $response = $this->json('POST','/api/tasks',[
             "label"=>$this->faker->text(7),
-            "sort_order"=>$this->faker->numerify('#'),
         ]);
 
         $response->assertJson([
@@ -40,14 +39,9 @@ class TaskTest extends TestCase
 
     public function test_for_validation_error_while_creating_a_task(){
         $response = $this->json('POST','/api/tasks',[
-            "label"=>$this->faker->text(7),
-            "sort_order"=>''
+            "label"=>''
         ]);
-        $response->assertJson([
-            'status'=>"error",
-            'message'=>null,
-
-        ])->assertStatus(400);
+        $response->assertStatus(400);
     }
 
      public function test_if_error_is_thrown_for_duplicate_task_label_if_allowed_duplicate_is_off_while_creating()
@@ -57,15 +51,9 @@ class TaskTest extends TestCase
         $task = factory(Task::class)->create();
         $response = $this->json('POST','/api/tasks',[
             "label"=>$task->label,
-            "sort_order"=>$task->sort_order,
         ]);
 
-        $response->assertStatus(400)
-        ->assertJson([
-            'status' => 'error',
-            'message' => 'Duplicate task label is not allowed',
-            'data' => null
-            ]);;
+        $response->assertStatus(400);
 
      }
 
@@ -85,19 +73,15 @@ class TaskTest extends TestCase
         $task = factory(Task::class)->create();
         $response=$this->json('PUT',"api/tasks/$task->id",[
             'label'=>$task->label. "_updated",
-            'sort_order'=>$task->sort_order
         ]);
+        $response->assertJson([
+            'status'=>"success",
+            'message'=>'Task Updated successfully',
+            'data' =>null
+        ])->assertStatus(200);
 
-        $response->assertStatus(200);
 
-         $this->assertDatabaseHas('tasks',[
-             'id'=>$task->id,
-             'label'=>$task->label ."_updated",
-             'sort_order'=>$task->sort_order,
-             'created_at'=>$task->created_at,
-             'updated_at'=>$task->updated_at,
-             'completed_at'=>$task->completed_at,
-         ]);
+
 
 
      }
@@ -110,16 +94,9 @@ class TaskTest extends TestCase
 
         $response = $this->json("PUT","/api/tasks/$task1->id",[
             "label"=>$task2->label,
-            "sort_order"=>$this->faker->numerify('#'),
         ]);
 
-        $response->assertStatus(400)
-        ->assertJson([
-            'status' => 'error',
-            'message' => 'Duplicate task label is not allowed',
-            'data' => null
-            ]);;
-
+        $response->assertStatus(400);
      }
 
 
