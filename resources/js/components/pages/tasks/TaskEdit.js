@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/Col';
 import { Link,withRouter } from "react-router-dom";
 import {getTask,updateTask} from "../../../services/TaskService";
 import {PUBLIC_URL} from "../../../constants"
+import Swal from 'sweetalert2'
+
 
 
 
@@ -32,7 +34,11 @@ class TaskEdit extends Component {
             this.setState({label:response.data.data.label})
         })
         .catch(err =>{
-            alert(err.response.data.message)
+            Swal.fire(
+                'Error',
+                err.response.data.message,
+                'error'
+              )
             history.push(PUBLIC_URL)
         })
 
@@ -51,10 +57,14 @@ class TaskEdit extends Component {
         const postBody={label:this.state.label}
         const submittedDataResponse = await updateTask(postBody,this.state.id)
         if(submittedDataResponse.status === 'success'){
-            alert(submittedDataResponse.message)
-            this.setState({label:" "})
+            Swal.fire(
+                'Success',
+                submittedDataResponse.message,
+                'success'
+              )
+           // this.setState({label:" "})
             this.setState({isLoading:false})
-            history.push(PUBLIC_URL)
+
         }
         else{
             console.log(submittedDataResponse)

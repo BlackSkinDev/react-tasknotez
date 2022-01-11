@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import { Link } from "react-router-dom";
 
 import  '../../asset/style.css';
+import Swal from 'sweetalert2'
 
 class Task extends Component {
     constructor(props) {
@@ -15,7 +16,81 @@ class Task extends Component {
 
 
     }
+    state ={
+        isLoading:false,
+        label:'',
+        errors:[],
+        BASE_URL:process.env.MIX_REACT_APP_BASE_URL,
+    }
 
+
+    setAsIncomplete = (taskId) => {
+        Swal.fire({
+            title: 'Set task as incomplete?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Axios.get(`${this.state.BASE_URL}/tasks/${taskId}/unset`)
+                .then(response=>{
+                    Swal.fire(
+                        'Done!',
+                        response.data.message,
+                        'success'
+                      )
+                      .then((result) => {
+                        location.reload();
+                      });
+
+                })
+                .catch(err =>{
+                    Swal.fire(
+                        'Error',
+                        'Error encountered while processing!',
+                        'error'
+                      )
+                })
+
+            }
+         })
+    }
+
+    setAsCompleted = (taskId) => {
+        Swal.fire({
+            title: 'Set task as complete?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Axios.get(`${this.state.BASE_URL}/tasks/${taskId}/set`)
+                .then(response=>{
+                    Swal.fire(
+                        'Done!',
+                        response.data.message,
+                        'success'
+                      )
+                      .then((result) => {
+                        location.reload();
+                      });
+
+                })
+                .catch(err =>{
+                    Swal.fire(
+                        'Error',
+                        'Error encountered while processing!',
+                        'error'
+                      )
+
+                })
+            }
+         })
+    }
 
 
     render() {
@@ -30,7 +105,6 @@ class Task extends Component {
                     <Badge bg="warning" className="status-badge" >Ongoing</Badge>:
                     <Badge bg="success" className="status-badge" >Completed</Badge>
                     }
-
                     </p>
                     </Card.Subtitle>
                     <Card.Text>
@@ -40,8 +114,8 @@ class Task extends Component {
                         <Button variant="outline-primary" className="button-text">Edit</Button>
                     </Link>
                     { this.props.task.completed_at==null?
-                     <Button variant="outline-success" className="ml-4 button-text">Complete</Button>:
-                     <Button variant="outline-danger" className="ml-4 button-text">Uncomplete</Button>
+                     <Button variant="outline-success" className="ml-4 button-text" id={this.props.task.id} onClick={e => this.setAsCompleted(e.target.id)}>Complete</Button>:
+                     <Button variant="outline-danger" className="ml-4 button-text" id={this.props.task.id} onClick={e => this.setAsIncomplete(e.target.id)}>Uncomplete</Button>
                     }
                     </Card.Body>
             </Card>

@@ -7,6 +7,8 @@ import { Link,withRouter } from "react-router-dom";
 import {storeNewTask} from "../../../services/TaskService";
 import {PUBLIC_URL} from "../../../constants"
 
+import Swal from 'sweetalert2'
+
 
 import {Spinner,Button,Form,Card} from 'react-bootstrap'
 
@@ -39,12 +41,15 @@ class TaskCreate extends Component {
         const postBody={label:this.state.label}
         const submitDataResponse = await storeNewTask(postBody)
         if(submitDataResponse.status === 'success'){
-            alert(submitDataResponse.message)
+            //alert(submitDataResponse.message)
+            Swal.fire(
+                'Success',
+                submitDataResponse.message,
+                'success'
+              )
             this.setState({label:" "})
             this.setState({isLoading:false})
-            history.push(PUBLIC_URL)
-
-
+    
         }
         else{
             this.setState({isLoading:false,errors:submitDataResponse.data})
