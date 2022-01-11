@@ -25,6 +25,6 @@ Route::namespace('Api')->group(function () {
     Route::get('/tasks/{task}/unset',[App\Http\Controllers\Api\TaskController::class,'setTaskAsInComplete']);
 
       // Route to swap sort order when task are rearranged
-      Route::get('/tasks/{task1}/{task2}/swap-sort-order',[App\Http\Controllers\Api\TaskController::class,'swapSortOrder']);
+      Route::put('/tasks/{task1}/{task2}/swap-sort-order',[App\Http\Controllers\Api\TaskController::class,'swapSortOrder']);
 });
 

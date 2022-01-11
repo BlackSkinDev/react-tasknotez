@@ -99,7 +99,6 @@ function setAsCompleted(taskId){
 
   const SortableItem = sortableElement(({task}) =>   <Card className="mt-4 task-card" key={task.id}>
             <Card.Body>
-                <Card.Text>{task.sort_order}</Card.Text>
                 <Card.Subtitle className="mb-2 text-muted">
                 <p>
                     <small>Created on: {task.created_at}</small>
@@ -168,7 +167,7 @@ class TaskList extends Component {
 
     updateSortOrderForTasks(task1_id, task2_id) {
         if(task1_id !== task2_id) {
-            Axios.get(`${BASE_URL}/tasks/${task1_id}/${task2_id}/swap-sort-order`)
+            Axios.put(`${BASE_URL}/tasks/${task1_id}/${task2_id}/swap-sort-order`)
             .then(response=>{
                console.log(response.data)
 
@@ -187,14 +186,11 @@ class TaskList extends Component {
 
 
     onSortEnd = ({oldIndex, newIndex}) => {
-       //console.log("Old index:" + oldIndex + " new index:" + newIndex)
-       //console.log(this.state.taskList[oldIndex].label +" interchanged with " + this.state.taskList[newIndex].label )
         this.updateSortOrderForTasks(this.state.taskList[oldIndex].id,this.state.taskList[newIndex].id);
         this.setState(({taskList}) => ({
           taskList: arrayMove(this.state.taskList, oldIndex, newIndex),
         }));
-       // console.log(this.state.taskList)
-       //console.log(this.state.taskList)
+
       };
 
 
