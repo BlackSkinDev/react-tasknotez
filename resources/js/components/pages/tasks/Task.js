@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 
 import  '../../asset/style.css';
 import Swal from 'sweetalert2'
+import {FaEye } from 'react-icons/fa';
+import TaskDisplayModal from './TaskDisplayModal';
+
 
 class Task extends Component {
     constructor(props) {
@@ -21,6 +24,8 @@ class Task extends Component {
         label:'',
         errors:[],
         BASE_URL:process.env.MIX_REACT_APP_BASE_URL,
+        openTaskModal: false,
+        taskLabel: '',
     }
 
 
@@ -92,12 +97,26 @@ class Task extends Component {
          })
     }
 
+    openModalWithItem = (task) => {
+        this.setState({
+            openTaskModal: true,
+            taskLabel: task.label,
+
+        })
+    }
+    onClose = ()=>{
+        this.setState({openTaskModal: false,taskLabel:""})
+    }
+
 
     render() {
         return (
             <div>
             <Card className="mt-4 task-card" key={this.props.task.id}>
                 <Card.Body>
+                    <Card.Title>
+                        <p><FaEye  onClick={() => this.openModalWithItem(this.props.task)} /></p>
+                    </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
                     <p>
                         <small>Created on: {this.props.task.created_at}</small>
@@ -124,6 +143,7 @@ class Task extends Component {
                     }
                     </Card.Body>
             </Card>
+              <TaskDisplayModal isOpen={this.state.openTaskModal} taskLabel={this.state.taskLabel} onClose={this.onClose}/>
             </div>
         )
     }
