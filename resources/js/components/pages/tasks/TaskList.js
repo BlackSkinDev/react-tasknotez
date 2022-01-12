@@ -99,7 +99,6 @@ function setAsCompleted(taskId){
 
   const SortableItem = sortableElement(({task}) =>   <Card className="mt-4 task-card" key={task.id}>
             <Card.Body>
-                <Card.Text>{task.sort_order}</Card.Text>
                 <Card.Subtitle className="mb-2 text-muted">
                 <p>
                     <small>Created on: {task.created_at}</small>
@@ -121,8 +120,8 @@ function setAsCompleted(taskId){
                     <Button variant="outline-primary" className="button-text">Edit</Button>
                 </Link>
                 {task.completed_at==null?
-                <Button variant="outline-success" className="ml-4 button-text" id={task.id} onClick={e =>setAsCompleted(e.target.id)}>Complete</Button>:
-                <Button variant="outline-danger" className="ml-4 button-text" id={task.id} onClick={e => setAsIncomplete(e.target.id)}>Uncomplete</Button>
+                <Button variant="outline-success" className="ml-4 button-text" id={task.id} onClick={e =>setAsCompleted(e.target.id)}>Mark as Complete</Button>:
+                <Button variant="outline-danger" className="ml-4 button-text" id={task.id} onClick={e => setAsIncomplete(e.target.id)}>Unmark as complete</Button>
                 }
                 </Card.Body>
             </Card>);

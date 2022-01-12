@@ -44,6 +44,7 @@ class TaskController extends Controller
             'label' => $request['label'],
             'sort_order' =>$last_sort_order
         ]);
+       
         return $this->success(null,'Task created successfully',Response::HTTP_CREATED);
 
     }
