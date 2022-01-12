@@ -21,6 +21,8 @@ import {FaEye } from 'react-icons/fa';
 
 
 
+
+
 import  '../../asset/style.css';
 
 const BASE_URL = process.env.MIX_REACT_APP_BASE_URL;
@@ -213,23 +215,35 @@ class TaskList extends Component {
                     </div>
                 )}
 
+                    {this.state.taskList.length > 0  ?
 
-                { this.state.taskList.length > 0 ?
+                        <Row className="g-3" className='mt-4 justify-content-center'>
+                        <Col xs={12} md={7}>
+                        <SortableContainer onSortEnd={this.onSortEnd} distance={0} >
+                        {this.state.taskList.map((task, index) => (
+                            <SortableItem key={`item-${task.id}`} index={index} task={task} />
 
-                    <Row className="g-3" className='mt-4 justify-content-center'>
-                    <Col xs={12} md={7}>
-                    <SortableContainer onSortEnd={this.onSortEnd} distance={0} >
-                    {this.state.taskList.map((task, index) => (
-                          <SortableItem key={`item-${task.id}`} index={index} task={task} />
+                        ))}
+                        </SortableContainer>
+                        </Col>
 
-                     ))}
-                       </SortableContainer>
-                    </Col>
+                        </Row>
 
-                    </Row>
+                        :
+                        <div>
+                            {!this.state.isLoading && (
+                            <Row className="g-3" className='mt-4 justify-content-center'>
+                                <Col xs={12} md={6}>
+                                <img  className="image" src={require('../../asset/task.png')}/>
+                                </Col>
+                                <Col xs={12} md={6}>
+                                <h1 className="mt-5">Oops! You have no task</h1>
+                                </Col>
 
-                    :<h4 className="mt-5">Oops! You have no task</h4>
-                }
+                            </Row>
+                            )}
+                        </div>
+                    }
 
 
             </div>
