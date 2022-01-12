@@ -36,7 +36,7 @@ DB_PORT=<YOUR_MYSQL_PORT>
 DB_DATABASE=<YOUR_DB_NAME>
 DB_USERNAME=<YOUR_DB_USERNAME>
 DB_PASSWORD=<YOUR_DB_PASSWORD>
-MIX_REACT_APP_BASE_URL= < Base url for Laravel API e.g  http://localhost:8000/api  or http://app.test/api (Valet)**>
+MIX_REACT_APP_BASE_URL= < Base url for Laravel API e.g  http://localhost:8000/api  or http://app.test/api (Provided you use Laravel Valet)**>
 ```
 
 ### LARAVEL INSTALLATION
@@ -60,7 +60,7 @@ Install the dependencies and start the server
 $ npm install && npm run dev
 ```
 
-You should be able to visit your app at your laravel app base url e.g  http://localhost:8000  or http://app.test (Valet).
+You should be able to visit your app at your laravel app base url e.g  http://localhost:8000  or http://app.test (Provided you use Laravel Valet).
 
 ## Testing
 To run unit tests:
