@@ -71,7 +71,7 @@ $ composer test
 ## Assumptions
 While creating the app the following Assumptions were made
 - **Absence of "allow_duplicates" setting implies that tasks labels can be duplicated** 
-- **The sort order was auto generated from backend and auto incremented for each task. Sort order was then used to order the task returned to frontend**
+- **The sort order was auto generated from backend by setting value of id for it for each task. This was done so as to make it unique and also be able to use it to to order the task returned to frontend**
 - **The completed_at attribute signified the task completion status, hence it was set to null when a task is created. When such
 task is set as complete, the completed_at was set to current timestamp and vice versa**
 - **There was a little contraint to reordering tasks. Dragging up or down of tasks one level was catered for on backend(If page is refreshed,new task order will be updated too).**

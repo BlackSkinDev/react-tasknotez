@@ -21,8 +21,8 @@ class TaskController extends Controller
 
     public $task_service;
 
-    public function __construct(){
-        $this->task_service = new TaskService;
+    public function __construct(TaskService $task_service){
+        $this->task_service = $task_service;
     }
 
     public function index()
@@ -39,12 +39,11 @@ class TaskController extends Controller
             return $this->error(null,Response::HTTP_BAD_REQUEST,['Duplicate task label is not allowed currently']);
         }
 
-        $last_sort_order = (Task::latest()->first()) ? (Task::latest()->first()->sort_order)+1 : 1;
+
         Task::create([
             'label' => $request['label'],
-            'sort_order' =>$last_sort_order
         ]);
-       
+
         return $this->success(null,'Task created successfully',Response::HTTP_CREATED);
 
     }
