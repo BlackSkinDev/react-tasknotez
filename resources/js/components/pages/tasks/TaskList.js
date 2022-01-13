@@ -191,7 +191,7 @@ class TaskList extends Component {
     componentDidMount() {
         this.getTasksLists()
         this.getAllowDuplicateStatus()
-        console.log('API URL :'+ this.state .setting)
+        console.log('Setting:'+ this.state.setting)
 
 
     }
