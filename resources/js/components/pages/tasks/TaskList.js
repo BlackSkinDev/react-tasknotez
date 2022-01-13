@@ -188,38 +188,36 @@ class TaskList extends Component {
 
     }
 
-    componentDidMount() {
-        this.getTasksLists()
-        this.getAllowDuplicateStatus()
-        console.log('Setting:'+ this.state.setting)
-
+    async componentDidMount() {
+       await this.getTasksLists()
+       await this.getAllowDuplicateStatus()
+      
 
     }
 
-    getAllowDuplicateStatus =
+    getAllowDuplicateStatus = async ()=>{
+        const response = await
         Axios.get(`${BASE_URL}/setting-status`)
-        .then(response=>{
+        if(response.status==200) {
             this.setState({setting:response.data.data})
-            console.log('Setting: api call'+ this.state.setting)
-
-        })
-        .catch(err =>{
+        }
+        else{
             Swal.fire(
                 'Error',
                 'Error encountered while processing!',
                 'error'
               )
+        }
 
-        })
     }
 
 
 
     updateAllowDuplicateStatus = async ()=>{
-        const title = this.state.setting ? 'Turn off allow duplicate task labels? !' : 'Turn on allow duplicate task labels? !'
+
         const response = await
             Swal.fire({
-                title: title,
+                title: 'Switch setting ?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
