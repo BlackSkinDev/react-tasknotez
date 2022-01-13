@@ -191,7 +191,7 @@ class TaskList extends Component {
     componentDidMount() {
         this.getTasksLists()
         this.getAllowDuplicateStatus()
-
+        console.log('API URL :'+process.env.MIX_REACT_APP_BASE_URL )
 
 
     }
