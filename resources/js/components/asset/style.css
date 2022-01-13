@@ -16,9 +16,12 @@
     transition: 0.3s;
 }
 
-.task-create-ard{
+.task-create-col{
     box-shadow: 0 4px 8px 4 rgba(0,0,0,0.2);
     transition: 0.3s;
+    background-color:#194787;
+    padding:30px;
+
 }
 
 
@@ -36,4 +39,25 @@
 .image{
     width :100%;
     height :550px;
+}
+
+.delete-icon{
+    color : red ;
+}
+.icon-div{
+    column-gap: 10px;
+}
+
+.check-icon{
+    color : green ;
+}
+.btn-div{
+    column-gap: 10px;
+}
+.but{
+    color:white ;
+}
+
+.button-status-text{
+    font-size: 13px;
 }

@@ -8,6 +8,8 @@ import {storeNewTask} from "../../../services/TaskService";
 import {PUBLIC_URL} from "../../../constants"
 
 import Swal from 'sweetalert2'
+import { toast } from 'react-toastify';
+
 
 
 import {Spinner,Button,Form,Card} from 'react-bootstrap'
@@ -43,20 +45,18 @@ class TaskCreate extends Component {
         if(submitDataResponse.status === 'success'){
             this.setState({label:" "})
             this.setState({isLoading:false})
-            Swal.fire(
-                'Success',
-                submitDataResponse.message,
-                'success'
-              )
-              .then((result) => {
-                window.location='/tasks';
-              });
-
+            toast.success( submitDataResponse.message,{
+                  autoClose:3000,
+                 
+            })
 
 
         }
         else{
             this.setState({isLoading:false,errors:submitDataResponse.data})
+            toast.error(submitDataResponse.data[0],{
+                autoClose:5000
+          })
 
         }
 
@@ -75,9 +75,9 @@ class TaskCreate extends Component {
                 </div>
                 <div className="clearfix"></div>
 
-                <Row className="mt-2">
+                <Row className="mt-2 justify-content-center">
 
-                    <Col xs={12} md={7}>
+                    <Col xs={12} md={7} className="task-create-col">
                         {this.state.isLoading &&(
                             <div className="text-center">
                                 <Spinner animation="border" role="status">
@@ -85,21 +85,20 @@ class TaskCreate extends Component {
                                 </Spinner>
                             </div>
                         )}
-                        <Card className="task-create-card mt-5">
+                        <Card className="">
                             <Card.Body>
                             <Form onSubmit={this.submitForm}>
                             <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label>Enter Task Label</Form.Label>
-                                    <Form.Control as="textarea" rows={3} name="label" value={this.state.label} onChange={(e)=>this.handleInput(e)} />
-                    </Form.Group>
-                                {this.state.errors &&
+                                <Form.Label>Enter Task Label</Form.Label>
+                                <Form.Control as="textarea" rows={3} name="label" value={this.state.label} onChange={(e)=>this.handleInput(e)} />
+                            </Form.Group>
+                                {/* {this.state.errors &&
                                     <p className="text-danger">{this.state.errors[0]}</p>
-                                }
+                                } */}
                                 { this.state.isLoading==true ?
                                     <Button variant="primary" size="lg" type="button" className="button-text" active disabled>Creating...</Button>:
                                     <Button variant="primary"  type="submit" active size="lg">Create Task</Button>
                                 }
-
                             </Form>
                         </Card.Body>
                         </Card>

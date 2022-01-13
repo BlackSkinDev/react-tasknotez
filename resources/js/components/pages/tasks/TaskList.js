@@ -14,7 +14,10 @@ import { arrayMove } from 'react-sortable-hoc';
 
 import Swal from 'sweetalert2'
 
-import {FaEye } from 'react-icons/fa';
+import {FaEye,FaTrash,FaEdit ,FaCheck, FaUndo,FaPowerOff} from 'react-icons/fa';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { css } from 'glamor';
 
 
 
@@ -24,6 +27,7 @@ import {FaEye } from 'react-icons/fa';
 
 
 import  '../../asset/style.css';
+import { Alert } from 'bootstrap';
 
 const BASE_URL = process.env.MIX_REACT_APP_BASE_URL;
 
@@ -40,7 +44,6 @@ function setAsIncomplete(taskId){
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes!'
       }).then((result) => {
-        if (result.isConfirmed) {
             Axios.get(`${BASE_URL}/tasks/${taskId}/unset`)
             .then(response=>{
                 Swal.fire(
@@ -60,9 +63,8 @@ function setAsIncomplete(taskId){
                     'error'
                   )
             })
+      })
 
-        }
-     })
 }
 
 function setAsCompleted(taskId){
@@ -99,6 +101,43 @@ function setAsCompleted(taskId){
      })
 }
 
+function deleteTask(taskId){
+
+
+    Swal.fire({
+        title: 'Delete task?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            Axios.delete(`${BASE_URL}/tasks/${taskId}`)
+            .then(response=>{
+                Swal.fire(
+                    'Done!',
+                    response.data.message,
+                    'success'
+                  )
+                  .then((result) => {
+                    location.reload();
+                  });
+
+            })
+            .catch(err =>{
+                Swal.fire(
+                    'Error',
+                    'Error encountered while processing!',
+                    'error'
+                  )
+
+            })
+        }
+     })
+
+}
+
   const SortableItem = sortableElement(({task}) =>   <Card className="mt-4 task-card" key={task.id}>
             <Card.Body>
                 <Card.Subtitle className="mb-2 text-muted">
@@ -118,13 +157,21 @@ function setAsCompleted(taskId){
                 <Card.Text>
                 {task.label}
                 </Card.Text>
-                <Link to={`/tasks/edit-task/${task.id}`} >
-                    <Button variant="outline-primary" className="button-text">Edit</Button>
-                </Link>
-                {task.completed_at==null?
-                <Button variant="outline-success" className="ml-4 button-text" id={task.id} onClick={e =>setAsCompleted(e.target.id)}>Mark as Complete</Button>:
-                <Button variant="outline-danger" className="ml-4 button-text" id={task.id} onClick={e => setAsIncomplete(e.target.id)}>Unmark as complete</Button>
-                }
+                <div className="d-flex icon-div">
+                    <Link to={`/tasks/edit-task/${task.id}`} >
+                        <FaEdit size="20" className="edit-icon" title="Edit Task"  />
+                    </Link>
+                    <Link  to="" onClick={e =>deleteTask(task.id)}>
+                        <FaTrash size="20" className="delete-icon" title="Delete Task" />
+                    </Link>
+                    <Link  to="">
+                        {task.completed_at==null?
+                            <FaCheck size="20" className="check-icon" title="Complete Task" onClick={e =>setAsCompleted(task.id)} />:
+                            <FaUndo size="19" className="check-icon" title="Set task as Incomplete" onClick={e =>setAsIncomplete(task.id)} />
+                        }
+                    </Link>
+
+                </div>
                 </Card.Body>
             </Card>);
 
@@ -141,12 +188,73 @@ class TaskList extends Component {
         label:'',
         errors:[],
         taskLabel: '',
+        setting:0
 
     }
 
     componentDidMount() {
         this.getTasksLists()
+        this.getAllowDuplicateStatus()
 
+
+    }
+
+    getAllowDuplicateStatus = async ()=>{
+        const response = await
+        Axios.get(`${BASE_URL}/setting-status`)
+        .then(response=>{
+            this.setState({setting:response.data.data})
+
+        })
+        .catch(err =>{
+            Swal.fire(
+                'Error',
+                'Error encountered while processing!',
+                'error'
+              )
+
+        })
+    }
+
+
+
+    updateAllowDuplicateStatus = async ()=>{
+        const title = this.state.setting ? 'Turn on allow duplicate task labels? !' : 'Turn off allow duplicate task labels? !'
+        const response = await
+            Swal.fire({
+                title: title,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+              })
+              .then((result)=>{
+                if (result.isConfirmed) {
+                    Axios.get(`${BASE_URL}/toggle-settings`)
+                    .then((response)=>{
+                        const msg = response.data.data ? 'Setting turned on!' : 'Setting turned off!'
+                        Swal.fire(
+                            msg,
+                            response.data.message,
+                            'success'
+                        )
+                        .then(()=>{
+                            this.setState({setting:response.data.data})
+                            location.reload();
+                        })
+
+                    })
+                    .catch((err)=>{
+                        Swal.fire(
+                            'Error',
+                            'Error encountered while processing!',
+                            'error'
+                          )
+                    })
+
+                }
+              })
     }
 
     getTasksLists = async () => {
@@ -195,15 +303,37 @@ class TaskList extends Component {
 
       };
 
+      onSortStart =({index, oldIndex, newIndex, collection, isKeySorting}, e)=>{
+        toast.warning("Only one level dragging is allowed!. Otherwise won't be recorded",{
+            autoClose:7000,
+            position: toast.POSITION.BOTTOM_LEFT,
+            
+
+        })
+      }
+
+
+
+
 
 
     render() {
         return (
             <div>
                 <h3>Task Management</h3>
-                <div className="float-right">
+                <div className="float-right d-flex btn-div">
                     <Link to="/tasks/create">
-                    <Button variant="info">+ Create New</Button>
+                    <Button variant="info" className="button-text">+ Create New</Button>
+                    </Link>
+
+                    <Link to="">
+
+                    {this.state.setting== 0 && !this.state.isLoading ?
+                           <Button variant="warning" className="button-status-text" onClick={this.updateAllowDuplicateStatus}><FaPowerOff/> Turn on allow <br/>duplicate labels setting</Button>:
+                           <Button variant="danger" className="button-status-text" onClick={this.updateAllowDuplicateStatus}><FaPowerOff/>  Turn off allow <br/>duplicate labels setting</Button>
+                        }
+
+
                     </Link>
                 </div>
                 <div className="clearfix"></div>
@@ -219,7 +349,7 @@ class TaskList extends Component {
 
                         <Row className="g-3" className='mt-4 justify-content-center'>
                         <Col xs={12} md={7}>
-                        <SortableContainer onSortEnd={this.onSortEnd} distance={0} >
+                        <SortableContainer onSortEnd={this.onSortEnd} distance={0} onSortStart={this.onSortStart} >
                         {this.state.taskList.map((task, index) => (
                             <SortableItem key={`item-${task.id}`} index={index} task={task} />
 

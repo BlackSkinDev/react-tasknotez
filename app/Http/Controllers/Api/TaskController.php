@@ -48,6 +48,11 @@ class TaskController extends Controller
 
     }
 
+    public function destroy(Task $task){
+        $task->delete();
+        return $this->success(null,'Task deleted successfully',Response::HTTP_CREATED);
+    }
+
 
     public function show(Task $task)
     {

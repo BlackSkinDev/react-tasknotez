@@ -13,6 +13,8 @@ import {Button,Container} from 'react-bootstrap'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {PUBLIC_URL} from "../constants"
 import Swal from 'sweetalert2'
+import { ToastContainer} from 'react-toastify';
+
 
 class App extends Component {
 
@@ -35,6 +37,7 @@ class App extends Component {
             </Container>
           </div>
         </Router>
+        <ToastContainer rtl/>
       </div>
     );
   }

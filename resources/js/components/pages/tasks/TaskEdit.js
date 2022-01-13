@@ -7,6 +7,9 @@ import { Link,withRouter } from "react-router-dom";
 import {getTask,updateTask} from "../../../services/TaskService";
 import {PUBLIC_URL} from "../../../constants"
 import Swal from 'sweetalert2'
+import { toast } from 'react-toastify';
+
+
 
 
 
@@ -57,19 +60,17 @@ class TaskEdit extends Component {
         const postBody={label:this.state.label}
         const submittedDataResponse = await updateTask(postBody,this.state.id)
         if(submittedDataResponse.status === 'success'){
-            Swal.fire(
-                'Success',
-                submittedDataResponse.message,
-                'success'
-              ) .then((result) => {
-                window.location='/tasks';
-              });
+              toast.success(  submittedDataResponse.message,{
+                autoClose:3000
+          })
             this.setState({isLoading:false})
 
         }
         else{
-            console.log(submittedDataResponse)
-            this.setState({isLoading:false,errors:submittedDataResponse.data})
+            this.setState({isLoading:false})
+            toast.error(submittedDataResponse.data[0],{
+                autoClose:5000
+          })
 
         }
 
@@ -88,9 +89,9 @@ class TaskEdit extends Component {
                 </div>
                 <div className="clearfix"></div>
 
-                <Row className="mt-2">
+                <Row className="mt-2 justify-content-center">
 
-                    <Col xs={12} md={7}>
+                    <Col xs={12} md={7} className="task-create-col">
                         {this.state.isLoading &&(
                             <div className="text-center">
                                 <Spinner animation="border" role="status">
@@ -105,9 +106,9 @@ class TaskEdit extends Component {
                                     <Form.Label>Enter Task Label</Form.Label>
                                     <Form.Control as="textarea" rows={3} name="label" value={this.state.label} onChange={(e)=>this.handleInput(e)} />
                     </Form.Group>
-                                {this.state.errors &&
+                                {/* {this.state.errors &&
                                     <p className="text-danger">{this.state.errors[0]}</p>
-                                }
+                                } */}
                                 { this.state.isLoading==true ?
                                     <Button variant="primary" size="lg" type="button" className="button-text" active disabled>Updating...</Button>:
                                     <Button variant="primary"  type="submit" active size="lg">Update Task</Button>
