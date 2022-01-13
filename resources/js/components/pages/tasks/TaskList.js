@@ -196,8 +196,7 @@ class TaskList extends Component {
 
     }
 
-    getAllowDuplicateStatus = async ()=>{
-        const response = await
+    getAllowDuplicateStatus =
         Axios.get(`${BASE_URL}/setting-status`)
         .then(response=>{
             this.setState({setting:response.data.data})
