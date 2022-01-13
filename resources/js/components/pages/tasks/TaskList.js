@@ -201,6 +201,7 @@ class TaskList extends Component {
         Axios.get(`${BASE_URL}/setting-status`)
         .then(response=>{
             this.setState({setting:response.data.data})
+            console.log('Setting: api call'+ this.state.setting)
 
         })
         .catch(err =>{
