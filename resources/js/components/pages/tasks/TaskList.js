@@ -22,10 +22,6 @@ import { css } from 'glamor';
 
 
 
-
-
-
-
 import  '../../asset/style.css';
 import { Alert } from 'bootstrap';
 
@@ -197,6 +193,7 @@ class TaskList extends Component {
         this.getAllowDuplicateStatus()
 
 
+
     }
 
     getAllowDuplicateStatus = async ()=>{
@@ -219,7 +216,7 @@ class TaskList extends Component {
 
 
     updateAllowDuplicateStatus = async ()=>{
-        const title = this.state.setting ? 'Turn on allow duplicate task labels? !' : 'Turn off allow duplicate task labels? !'
+        const title = this.state.setting ? 'Turn off allow duplicate task labels? !' : 'Turn on allow duplicate task labels? !'
         const response = await
             Swal.fire({
                 title: title,
@@ -304,14 +301,17 @@ class TaskList extends Component {
       };
 
       onSortStart =({index, oldIndex, newIndex, collection, isKeySorting}, e)=>{
-        toast.warning("Only one level dragging is allowed!. Otherwise won't be recorded",{
-            autoClose:7000,
-            position: toast.POSITION.BOTTOM_LEFT,
-            
+          if(!localStorage.getItem('hasToast')){
+            toast.warning("Only one level dragging is allowed!. Otherwise won't be recorded",{
+                autoClose:5000,
+                position: toast.POSITION.BOTTOM_LEFT,
+                onClose: () =>  localStorage.setItem('hasToast',true)
+              })
+          }
 
-        })
       }
 
+     // window.localStorage.getItem(key);
 
 
 
