@@ -24,6 +24,9 @@ Route::namespace('Api')->group(function () {
      // Route to toggle allow duplicate settings
     Route::get('/toggle-settings',[App\Http\Controllers\Api\SettingsController::class,'toggleSettings']);
 
+    // Route to swap sort order when task are rearranged
+    Route::put('/tasks/swap-sort-order',[App\Http\Controllers\Api\TaskController::class,'updateSortOrders']);
+
     Route::resource('/tasks',TaskController::class);
 
     // Route set Incomplete task as complete
@@ -31,9 +34,6 @@ Route::namespace('Api')->group(function () {
 
      // Route set Complete task as incomplete
     Route::get('/tasks/{task}/unset',[App\Http\Controllers\Api\TaskController::class,'setTaskAsInComplete']);
-
-    // Route to swap sort order when task are rearranged
-    Route::put('/tasks/{task1}/{task2}/swap-sort-order',[App\Http\Controllers\Api\TaskController::class,'swapSortOrder']);
 
 
 

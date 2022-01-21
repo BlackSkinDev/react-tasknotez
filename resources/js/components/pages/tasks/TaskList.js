@@ -24,6 +24,7 @@ import { css } from 'glamor';
 
 import  '../../asset/style.css';
 import { Alert } from 'bootstrap';
+import {getSortedTask, getSortedTask2} from "../../../utils";
 
 const BASE_URL = process.env.MIX_REACT_APP_BASE_URL;
 
@@ -134,7 +135,7 @@ function deleteTask(taskId){
 
 }
 
-  const SortableItem = sortableElement(({task}) =>   <Card className="mt-4 task-card" key={task.id}>
+  const SortableItem = sortableElement(({task}) =><Card className="mt-4 task-card" key={task.id}>
             <Card.Body>
                 <Card.Subtitle className="mb-2 text-muted">
                 <p>
@@ -191,7 +192,7 @@ class TaskList extends Component {
     async componentDidMount() {
        await this.getTasksLists()
        await this.getAllowDuplicateStatus()
-      
+
 
     }
 
@@ -270,13 +271,8 @@ class TaskList extends Component {
        }
     };
 
-    updateSortOrderForTasks(task1_id, task2_id) {
-        if(task1_id !== task2_id) {
-            Axios.put(`${BASE_URL}/tasks/${task1_id}/${task2_id}/swap-sort-order`)
-            .then(response=>{
-               console.log(response.data)
-
-            })
+    updateSortOrderForTasks(updatedTasks) {
+            Axios.put(`${BASE_URL}/tasks/swap-sort-order`, { updatedTasks })
             .catch(err =>{
                 Swal.fire(
                     'Error',
@@ -284,18 +280,19 @@ class TaskList extends Component {
                     'error'
                   )
 
-            })
-        }
+            });
 
     }
 
 
     onSortEnd = ({oldIndex, newIndex}) => {
-        this.updateSortOrderForTasks(this.state.taskList[oldIndex].id,this.state.taskList[newIndex].id);
+        console.log("task moved from position " + oldIndex + " to  position " + newIndex);
+        const oldTaskList = this.state.taskList;
         this.setState(({taskList}) => ({
           taskList: arrayMove(this.state.taskList, oldIndex, newIndex),
-        }));
-
+        }))
+        const updatedTask = getSortedTask2(oldTaskList, this.state.taskList);
+        this.updateSortOrderForTasks(updatedTask);
       };
 
       onSortStart =({index, oldIndex, newIndex, collection, isKeySorting}, e)=>{
@@ -309,7 +306,6 @@ class TaskList extends Component {
 
       }
 
-     // window.localStorage.getItem(key);
 
 
 
@@ -343,7 +339,7 @@ class TaskList extends Component {
                     </div>
                 )}
 
-                    {this.state.taskList.length > 0  ?
+                    {this.state.taskList.length ?
 
                         <Row className="g-3" className='mt-4 justify-content-center'>
                         <Col xs={12} md={7}>

@@ -85,9 +85,20 @@ class TaskController extends Controller
 
     public function swapSortOrder(Task $task1,Task $task2){
         $old_sort_id = ['task1'=>$task1->sort_order,'task2'=>$task2->sort_order];
-
         $task1->update(['sort_order'=>$old_sort_id['task2']]);
         $task2->update(['sort_order'=>$old_sort_id['task1']]);
+        return $this->success(null,null,Response::HTTP_OK);
+
+
+    }
+
+    public function updateSortOrders(Request $request){
+        $tasks = $request->updatedTasks;
+         foreach ($tasks as $task_obj) {
+             $task_id = $task_obj['id'];
+             $task_sort_order = $task_obj['sort_order'];
+             Task::where('id', '=', $task_id)->first()->update(['sort_order'=> $task_sort_order]);
+         }
         return $this->success(null,null,Response::HTTP_OK);
 
 
