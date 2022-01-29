@@ -1,3 +1,6 @@
+import Swal from 'sweetalert2'
+
+
 export function getSortedTask(oldTaskList, newTaskList) {
     const finalTaskList = [];
     oldTaskList.forEach((task1, index1) => {
@@ -35,3 +38,4 @@ export function getSortedTask2(oldTaskList, newTaskList) {
 
     return finalTaskList;
 }
+

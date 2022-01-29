@@ -18,162 +18,17 @@ import {FaEye,FaTrash,FaEdit ,FaCheck, FaUndo,FaPowerOff} from 'react-icons/fa';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { css } from 'glamor';
-
-
-
-
+import Task from './Task'
 import  '../../asset/style.css';
 import { Alert } from 'bootstrap';
 import {getSortedTask, getSortedTask2} from "../../../utils";
 
-const BASE_URL = process.env.MIX_REACT_APP_BASE_URL;
 
 const SortableContainer = sortableContainer(({children}) => {
     return <div>{children}</div>;
   });
 
-function setAsIncomplete(taskId){
-    Swal.fire({
-        title: 'Set task as incomplete?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes!'
-      }).then((result) => {
-            Axios.get(`${BASE_URL}/tasks/${taskId}/unset`)
-            .then(response=>{
-                Swal.fire(
-                    'Done!',
-                    response.data.message,
-                    'success'
-                  )
-                  .then((result) => {
-                    location.reload();
-                  });
-
-            })
-            .catch(err =>{
-                Swal.fire(
-                    'Error',
-                    'Error encountered while processing!',
-                    'error'
-                  )
-            })
-      })
-
-}
-
-function setAsCompleted(taskId){
-    Swal.fire({
-        title: 'Set task as complete?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
-      }).then((result) => {
-        if (result.isConfirmed) {
-            Axios.get(`${BASE_URL}/tasks/${taskId}/set`)
-            .then(response=>{
-                Swal.fire(
-                    'Done!',
-                    response.data.message,
-                    'success'
-                  )
-                  .then((result) => {
-                    location.reload();
-                  });
-
-            })
-            .catch(err =>{
-                Swal.fire(
-                    'Error',
-                    'Error encountered while processing!',
-                    'error'
-                  )
-
-            })
-        }
-     })
-}
-
-function deleteTask(taskId){
-
-
-    Swal.fire({
-        title: 'Delete task?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes'
-      }).then((result) => {
-        if (result.isConfirmed) {
-            Axios.delete(`${BASE_URL}/tasks/${taskId}`)
-            .then(response=>{
-                Swal.fire(
-                    'Done!',
-                    response.data.message,
-                    'success'
-                  )
-                  .then((result) => {
-                    location.reload();
-                  });
-
-            })
-            .catch(err =>{
-                Swal.fire(
-                    'Error',
-                    'Error encountered while processing!',
-                    'error'
-                  )
-
-            })
-        }
-     })
-
-}
-
-  const SortableItem = sortableElement(({task}) =><Card className="mt-4 task-card" key={task.id}>
-            <Card.Body>
-                <Card.Subtitle className="mb-2 text-muted">
-                <p>
-                    <small>Created on: {task.created_at}</small>
-                    { task.completed_at==null?
-                        <Badge bg="warning" className="status-badge float-right" >Ongoing</Badge>:
-                        <Badge bg="success" className="status-badge float-right" >Completed</Badge>
-                    }
-                </p>
-
-                {task.completed_at &&
-                    (<p><small>Completed on: {task.completed_at}</small></p>)
-
-                }
-                </Card.Subtitle>
-                <Card.Text>
-                {task.label}
-                </Card.Text>
-                <div className="d-flex icon-div">
-                    <Link to={`/tasks/edit-task/${task.id}`} >
-                        <FaEdit size="20" className="edit-icon" title="Edit Task"  />
-                    </Link>
-                    <Link  to="" onClick={e =>deleteTask(task.id)}>
-                        <FaTrash size="20" className="delete-icon" title="Delete Task" />
-                    </Link>
-                    <Link  to="">
-                        {task.completed_at==null?
-                            <FaCheck size="20" className="check-icon" title="Complete Task" onClick={e =>setAsCompleted(task.id)} />:
-                            <FaUndo size="19" className="check-icon" title="Set task as Incomplete" onClick={e =>setAsIncomplete(task.id)} />
-                        }
-                    </Link>
-
-                </div>
-                </Card.Body>
-            </Card>);
-
-
-
+const SortableItem = sortableElement(({task}) =><Task  task={task}/>);
 
 
 class TaskList extends Component {
@@ -192,13 +47,11 @@ class TaskList extends Component {
     async componentDidMount() {
        await this.getTasksLists()
        await this.getAllowDuplicateStatus()
-
-
     }
 
     getAllowDuplicateStatus = async ()=>{
         const response = await
-        Axios.get(`${BASE_URL}/setting-status`)
+        Axios.get(`${this.state.BASE_URL}/setting-status`)
         if(response.status==200) {
             this.setState({setting:response.data.data})
         }
@@ -227,7 +80,7 @@ class TaskList extends Component {
               })
               .then((result)=>{
                 if (result.isConfirmed) {
-                    Axios.get(`${BASE_URL}/toggle-settings`)
+                    Axios.get(`${this.state.BASE_URL}/toggle-settings`)
                     .then((response)=>{
                         const msg = response.data.data ? 'Setting turned on!' : 'Setting turned off!'
                         Swal.fire(
@@ -272,7 +125,7 @@ class TaskList extends Component {
     };
 
     updateSortOrderForTasks(updatedTasks) {
-            Axios.put(`${BASE_URL}/tasks/swap-sort-order`, { updatedTasks })
+            Axios.put(`${this.state.BASE_URL}/tasks/swap-sort-order`, { updatedTasks })
             .catch(err =>{
                 Swal.fire(
                     'Error',
@@ -286,7 +139,7 @@ class TaskList extends Component {
 
 
     onSortEnd = ({oldIndex, newIndex}) => {
-        console.log("task moved from position " + oldIndex + " to  position " + newIndex);
+
         const oldTaskList = this.state.taskList;
         this.setState(({taskList}) => ({
           taskList: arrayMove(this.state.taskList, oldIndex, newIndex),
@@ -295,27 +148,13 @@ class TaskList extends Component {
         this.updateSortOrderForTasks(updatedTask);
       };
 
-      onSortStart =({index, oldIndex, newIndex, collection, isKeySorting}, e)=>{
-          if(!localStorage.getItem('hasToast')){
-            toast.warning("Only one level dragging is allowed!. Otherwise won't be recorded",{
-                autoClose:5000,
-                position: toast.POSITION.BOTTOM_LEFT,
-                onClose: () =>  localStorage.setItem('hasToast',true)
-              })
-          }
-
-      }
-
-
-
-
-
 
     render() {
         return (
             <div>
                 <h3>Task Management</h3>
                 <div className="float-right d-flex btn-div">
+                    <h5>You can drag and drop task to rearrange them</h5>
                     <Link to="/tasks/create">
                     <Button variant="info" className="button-text">+ Create New</Button>
                     </Link>
@@ -343,7 +182,7 @@ class TaskList extends Component {
 
                         <Row className="g-3" className='mt-4 justify-content-center'>
                         <Col xs={12} md={7}>
-                        <SortableContainer onSortEnd={this.onSortEnd} distance={0} onSortStart={this.onSortStart} >
+                        <SortableContainer onSortEnd={this.onSortEnd} distance={0} >
                         {this.state.taskList.map((task, index) => (
                             <SortableItem key={`item-${task.id}`} index={index} task={task} />
 
