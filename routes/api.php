@@ -17,7 +17,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('Api')->group(function () {
 
-    // Route to get allow duplicate status
+
+        Route::prefix('/expense-tracker')->group(function () {
+
+            Route::post('/register',[App\Http\Controllers\Api\ExpenseTrackerController::class,'register']);
+            Route::post('/login',[App\Http\Controllers\Api\ExpenseTrackerController::class,'login']);
+
+            Route::middleware(['auth:sanctum'])->group(function () {
+                Route::post('/logout',[App\Http\Controllers\Api\ExpenseTrackerController::class,'logout']);
+            });
+
+        });
+
+
+
+
+     // Route to get allow duplicate status
     Route::get('/setting-status',[App\Http\Controllers\Api\SettingsController::class,'getStatus']);
 
 
@@ -34,6 +49,8 @@ Route::namespace('Api')->group(function () {
 
      // Route set Complete task as incomplete
     Route::get('/tasks/{task}/unset',[App\Http\Controllers\Api\TaskController::class,'setTaskAsInComplete']);
+
+
 
 
 
