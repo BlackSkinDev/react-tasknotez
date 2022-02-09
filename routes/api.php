@@ -27,6 +27,8 @@ Route::namespace('Api')->group(function () {
             Route::middleware(['auth:sanctum'])->group(function () {
                 Route::get('/expenses',[App\Http\Controllers\Api\ExpenseTrackerController::class,'getUserExpenses']);
                 Route::post('/expenses',[App\Http\Controllers\Api\ExpenseTrackerController::class,'store']);
+                Route::delete('/expenses/{expense}',[App\Http\Controllers\Api\ExpenseTrackerController::class,'deleteExpense']);
+
                 //Route::post('/logout',[App\Http\Controllers\Api\ExpenseTrackerController::class,'logout']);
             });
 

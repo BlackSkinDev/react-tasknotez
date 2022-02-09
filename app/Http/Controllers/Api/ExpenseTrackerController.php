@@ -29,6 +29,11 @@ class ExpenseTrackerController extends Controller
         return $this->success(new ExpenseResource($expense),'Hurray! Expense created successfully.',Response::HTTP_CREATED);
     }
 
+    public function deleteExpense(Expense $expense){
+        $expense->delete();
+        return $this->success(null,'Surprise! Expense deleted successfully.',Response::HTTP_OK);
+    }
+
 
     public function register(ExpenseTrackerRegisterFormRequest $request){
        User::create([
