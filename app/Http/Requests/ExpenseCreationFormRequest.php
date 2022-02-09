@@ -5,10 +5,12 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 
+
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ExpenseTrackerLoginFormRequest extends FormRequest
+
+class ExpenseCreationFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,12 +29,13 @@ class ExpenseTrackerLoginFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'email' => ['required', 'string'],
-            'password' => ['required', 'string']
-        ];
-    }
+            return [
+                'date' => ['required', 'string','date'],
+                'amount' => ['required'],
+                'label'=>['required'],
+            ];
 
+    }
 
     protected function failedValidation(Validator $validator) {
 
@@ -42,4 +45,6 @@ class ExpenseTrackerLoginFormRequest extends FormRequest
             'data'=>$validator->errors()->all()],Response::HTTP_BAD_REQUEST
         ));
     }
+
+
 }

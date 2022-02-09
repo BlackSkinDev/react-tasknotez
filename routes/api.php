@@ -23,8 +23,11 @@ Route::namespace('Api')->group(function () {
             Route::post('/register',[App\Http\Controllers\Api\ExpenseTrackerController::class,'register']);
             Route::post('/login',[App\Http\Controllers\Api\ExpenseTrackerController::class,'login']);
 
+
             Route::middleware(['auth:sanctum'])->group(function () {
-                Route::post('/logout',[App\Http\Controllers\Api\ExpenseTrackerController::class,'logout']);
+                Route::get('/expenses',[App\Http\Controllers\Api\ExpenseTrackerController::class,'getUserExpenses']);
+                Route::post('/expenses',[App\Http\Controllers\Api\ExpenseTrackerController::class,'store']);
+                //Route::post('/logout',[App\Http\Controllers\Api\ExpenseTrackerController::class,'logout']);
             });
 
         });

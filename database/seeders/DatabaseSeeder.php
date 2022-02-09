@@ -1,5 +1,6 @@
 <?php
 
+namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,7 +14,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             SettingSeeder::class,
-            TaskSeeder::class
+            TaskSeeder::class,
+            UserSeeder::class,
+            ExpenseSeeder::class
         ]);
     }
 }

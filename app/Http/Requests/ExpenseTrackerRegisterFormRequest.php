@@ -31,7 +31,7 @@ class ExpenseTrackerRegisterFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'username'=>['required', 'string', 'max:12','regex:/^[A-Za-z0-9 ]+$/'],
+            'username'=>['required','without_spaces' ,'string', 'max:12','regex:/^[A-Za-z0-9 ]*$/'],
             'email'=>['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => 'required|min:6|max:16|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/|confirmed',
         ];
@@ -40,6 +40,7 @@ class ExpenseTrackerRegisterFormRequest extends FormRequest
     public function messages(){
         return [
             'username.regex'=>'Display name may not contain any special character',
+            'username.without_spaces'=>'Display name may not contain empty spaces',
             'password.regex'=>'Password must contain an uppercase,lowercase,number and a special character',
         ];
     }
