@@ -34,6 +34,19 @@ Route::namespace('Api')->group(function () {
 
         });
 
+        Route::prefix('/vue-task-tracker-app')->group(function () {
+
+                Route::get('/tasks',[App\Http\Controllers\Api\VueTaskTrackerController::class,'index']);
+                Route::get('/tasks/{task}',[App\Http\Controllers\Api\VueTaskTrackerController::class,'show']);
+
+                Route::delete('/tasks/{task}',[App\Http\Controllers\Api\VueTaskTrackerController::class,'delete']);
+                Route::post('/tasks',[App\Http\Controllers\Api\VueTaskTrackerController::class,'store']);
+                Route::put('/tasks/{task}',[App\Http\Controllers\Api\VueTaskTrackerController::class,'update']);
+
+
+
+        });
+
 
 
 

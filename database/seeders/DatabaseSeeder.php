@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             TaskSeeder::class,
             UserSeeder::class,
-            ExpenseSeeder::class
+            ExpenseSeeder::class,
+            VueTaskSeeder::class,
         ]);
     }
 }
